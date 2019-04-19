@@ -17,9 +17,15 @@ class Plan extends Base
 {
     public function planInfo()
     {
-        $data = Request::post();//获取数据
-        $page=$data['page'];
-        $res = PlanModel:: where('is_deleted', 0)->page($page,5)->select();
+        $page = 1;
+        if (!empty(Request::post())) {
+            $data = Request::post();//获取数据
+            $page = $data['page'];
+        }
+        $res = PlanModel::alias('a')->leftJoin('user b', 'b.id=a.uid')
+            ->field(['a.id'=>'id','content','sex','date_info','address'])
+            ->where('a.is_deleted', 0)->page($page, 5)
+            ->select();
         return json_encode($res);
     }
 
