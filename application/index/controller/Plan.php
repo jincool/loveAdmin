@@ -24,7 +24,7 @@ class Plan extends Base
         }
         $res = PlanModel::alias('a')->leftJoin('user b', 'b.id=a.uid')
             ->field(['a.id'=>'id','content','sex','date_info','address'])
-            ->where('a.is_deleted', 0)->page($page, 5)
+            ->where('a.is_deleted', 0)->order('id', 'desc')->page($page, 5)
             ->select();
         return json_encode($res);
     }
