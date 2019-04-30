@@ -9,7 +9,16 @@
 namespace app\index\controller;
 
 
-class Status
+use app\common\controller\Base;
+use app\common\model\Plan;
+
+class Status extends Base
 {
 
+    public function planStatus(){
+        $map = [];//条件组
+        $map[]=['is_deleted','=',0];
+        $data=Plan::where($map)->count('id');
+        return json_encode($data);
+    }
 }
