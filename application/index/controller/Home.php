@@ -24,10 +24,10 @@ class Home extends Base
             //文件信息验证，成功上传到指定目录,以public为起始
             $info=$file ->validate([
                 'size' => 1000000,
-//                'ext' =>'jpeg,jpg,png,gif' ,
+                'ext' =>'jpeg,jpg,png,gif' ,
             ])->move('uploads/');
             if ($info) {
-                // 获取服务器中文件的名字并赋予表单信息title_img
+                // 获取服务器中文件的名字
                 echo $info ->getSaveName();
             } else {
                 $this->error($file ->getError());
