@@ -10,25 +10,28 @@ namespace app\index\controller;
 
 
 use app\common\controller\Base;
+use think\File;
+use think\facade\Request;
 class Home extends Base
 {
 
     public function upLoadImg()
     {
 
-        //获取表单上传文件
-        $file = request()->file('file');
-        if (empty($file)) {
-            $this->error('请选择上传文件');
-        }
-        //移动到框架应用根目录/public/uploads/ 目录下
-        $info = $file->move( '../uploads');
-        if ($info) {
-//            $this->success('文件上传成功');
-         echo $info->getFilename();
-        } else {
-            //上传失败获取错误信息
-            $this->error($file->getError());
+        //获取上传图片信息
+        $file=Request::file('file');
+        if ($file) {
+            //文件信息验证，成功上传到指定目录,以public为起始
+            $info=$file ->validate([
+                'size' => 1000000,
+//                'ext' =>'jpeg,jpg,png,gif' ,
+            ])->move('uploads/');
+            if ($info) {
+                // 获取服务器中文件的名字并赋予表单信息title_img
+                echo $info ->getSaveName();
+            } else {
+                $this->error($file ->getError());
+            }
         }
     }
 }
