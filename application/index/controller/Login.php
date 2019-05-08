@@ -61,7 +61,9 @@ class Login extends Base
                         'status' => 1,
                         'message' => '登录成功',
                         'user' => ['uid' => $result->id,
-                            'sex' => $result->sex]
+                            'sex' => $result->sex,
+                            'wid' => $result->wid,
+                            ]
                     ]);
                 }
             }
